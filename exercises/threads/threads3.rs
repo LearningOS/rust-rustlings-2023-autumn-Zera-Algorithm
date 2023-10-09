@@ -49,7 +49,6 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
     });
 }
 
-#[test]
 fn main() {
     let (tx, rx) = mpsc::channel();
     let queue = Queue::new();
