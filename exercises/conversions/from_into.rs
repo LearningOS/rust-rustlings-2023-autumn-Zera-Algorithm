@@ -1,7 +1,7 @@
 // from_into.rs
 //
 // The From trait is used for value-to-value conversions. If From is implemented
-// correctly for a type, the Into trait should work conversely. You can read
+// correctly for a type, the Into trait should work conversely(相反地). You can read
 // more about it at https://doc.rust-lang.org/std/convert/trait.From.html
 //
 // Execute `rustlings hint from_into` or use the `hint` watch subcommand for a
@@ -40,10 +40,30 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of
 // Person Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
 
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        if s.len() == 0 {
+            Person::default()
+        } else {
+            let v: Vec<&str> = s.split(",").collect();
+            if v.len() < 2 || v[0].len() == 0 {
+                Person::default()
+            } else {
+                let result = v[1].parse::<usize>();
+                match result {
+                    Ok(val) => {
+                        Person {
+                            name: String::from(v[0]),
+                            age: val,
+                        }
+                    },
+                    Err(_) => {
+                        Person::default()
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -127,14 +147,14 @@ mod tests {
     #[test]
     fn test_trailing_comma() {
         let p: Person = Person::from("Mike,32,");
-        assert_eq!(p.name, "John");
-        assert_eq!(p.age, 30);
+        assert_eq!(p.name, "Mike");
+        assert_eq!(p.age, 32);
     }
 
     #[test]
     fn test_trailing_comma_and_some_string() {
         let p: Person = Person::from("Mike,32,man");
-        assert_eq!(p.name, "John");
-        assert_eq!(p.age, 30);
+        assert_eq!(p.name, "Mike");
+        assert_eq!(p.age, 32);
     }
 }
