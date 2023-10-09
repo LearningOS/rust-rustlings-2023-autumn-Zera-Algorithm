@@ -10,6 +10,7 @@
 // hint.
 
 
+#[test]
 fn main() {
     let my_fav_fruits = vec!["banana", "custard apple", "avocado", "peach", "raspberry"];
 
